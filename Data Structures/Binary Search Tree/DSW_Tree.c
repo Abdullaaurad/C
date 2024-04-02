@@ -9,22 +9,24 @@ struct Node{
 };
 
 struct Node* rightRotate(struct Node* Tree){
-    struct Node* x=Tree->left;
-    struct Node* y=x->right;
+    if (Tree == NULL || Tree->left == NULL) {
+        return Tree;  // No rotation possible, return original tree
+    }
 
-    x->right=Tree;
-    Tree->left=y;
+    struct Node* x = Tree->left;
+    Tree->left = x->right;
+    if (x->right != NULL) {
+        x->right->left = NULL;  // Set left child's left pointer to NULL after rotation
+    }
+    x->right = Tree;
 
     return x;
 }
 
 struct Node* leftRotate(struct Node* Tree){
     struct Node* x=Tree->right;
-    struct Node* y=x->left;
-
+    Tree->right=x->left;
     x->left=Tree;
-    Tree->right=y;
-
     return x;
 }
 
@@ -71,13 +73,13 @@ void InOrderTraversal(struct Node* Tree){
     }
 }
 
-void PreorderTraversal(struct Node* Tree){
-    if(Tree==NULL){
-        return;
+
+void PreorderTraversal(struct Node* Tree) {
+    if (Tree != NULL) {
+        printf("%d ", Tree->data);
+        PreorderTraversal(Tree->left);
+        PreorderTraversal(Tree->right);
     }
-    printf("%d   ",Tree->data);
-    PreorderTraversal(Tree->left);
-    PreorderTraversal(Tree->right);
 }
 
 struct Node* BackBone(struct Node* Root){
@@ -85,15 +87,24 @@ struct Node* BackBone(struct Node* Root){
     struct Node* ptr=Root;
     struct Node* start=ptr;
     while(ptr!=NULL){
+        printf("\n\n\n");
+        printf("Start is :%d\n",start->data);
+        PreorderTraversal(ptr);
+        printf("\n\n\n");
         if(ptr->left!=NULL){
-            printf("\nRotating right %d",ptr->data);
+            printf("\nRotating right %d ",ptr->data);
             ptr=rightRotate(ptr);
+            printf("\nAfter Rotation ptr is %d",ptr->data);
+            printf("\nAfter Rotation ptr right is %d",ptr->right->data);
+            if(ptr->right->left!=NULL){
+                printf("\nAfter Rotation ptr right left is %d",ptr->right->left->data);
+            }
             if(i==0){
                 start=ptr;
             }
         }
         else if(ptr->right!=NULL){
-            printf("\nNext right node %d",ptr->data);
+            printf("\nNext right node from %d is %d ",ptr->data,ptr->right->data);
             ptr=ptr->right;
             i++;
         }

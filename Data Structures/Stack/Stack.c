@@ -28,19 +28,20 @@ void push(char A,char stack[MAX_SIZE]){
         printf("The stack is already full");
     }
     else{
-        TOP=TOP+1;
-        stack[TOP]=A;
+        TOP=TOP+1;   //increase TOP
+        stack[TOP]=A;   //Enter data to stack
     }
 }
 
 void pop(char k,char stack[MAX_SIZE]){
-    if(isempty()){
+    if(isempty()){                          //
         printf("The stack isempty");
     }
     else{
         k=stack[TOP];
         printf("%c",stack[TOP]);
         TOP=TOP-1;
+        //if you want to return the value we can use k
     }
 }
 
