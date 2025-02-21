@@ -7,7 +7,7 @@ struct Node{
     struct Node* next;
 };
 
-struct Graph{
+struct Graph
     int V;
     struct Node* list;
 };
